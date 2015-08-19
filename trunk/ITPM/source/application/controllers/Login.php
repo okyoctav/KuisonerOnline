@@ -10,7 +10,7 @@ class Login extends CI_Controller {
 
 	public function index()
 	{
-		alreadyLogin();
+		alreadyLogin($this->session->userdata('login')[0]);
 
 		if ($this->input->post('tombol') != 'L O G I N') {
 			$this->load->view('login');
@@ -25,7 +25,7 @@ class Login extends CI_Controller {
 				redirect(base_url('login'),'refresh');
 			}else{
 				$this->session->set_userdata('login',$results);
-				alreadyLogin();
+				alreadyLogin($this->session->userdata('login')[0]);
 			}
 		}
 	}
