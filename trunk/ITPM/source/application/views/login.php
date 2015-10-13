@@ -25,7 +25,7 @@
             <div class="panel panel-signin">
                 <div class="panel-body">
                     <div class="logo text-center">
-                        <img src="<?= base_url() ?>assets/images/logo-primary.png" alt="Chain Logo" >
+                        <img src="<?= base_url() ?>assets/images/logo.jpg" alt="Chain Logo" >
                     </div>
                     <br />
                     <h4 class="text-center mb5">.:: Login User ::.</h4>
@@ -43,12 +43,6 @@
                         </div><!-- input-group -->
                         
                         <div class="clearfix">
-                            <div class="pull-left">
-                                <div class="ckbox ckbox-primary mt10">
-                                    <input type="checkbox" id="rememberMe" value="1">
-                                    <label for="rememberMe">Remember Me</label>
-                                </div>
-                            </div>
                             <div class="pull-right">
                                 <input type="submit" name="tombol" value="L O G I N" class="btn btn-success">
                             </div>
@@ -69,7 +63,7 @@
         <script src="<?= base_url(); ?>assets/js/retina.min.js"></script>
         <script src="<?= base_url(); ?>assets/js/jquery.cookies.js"></script>
 
-        <script src="js/custom.js"></script>
+        <script src="<?= base_url(); ?>assets/js/custom.js"></script>
 
     </body>
 </html>

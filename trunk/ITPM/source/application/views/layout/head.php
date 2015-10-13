@@ -10,7 +10,8 @@
         <title><?= $title; ?></title>
 
         <link href="<?= base_url(); ?>assets/css/style.default.css" rel="stylesheet">
-        <link href="<?= base_url(); ?>assets/css/jquery.Jcrop.min.css" rel="stylesheet">
+        <link href="<?= base_url(); ?>assets/css/morris.css" rel="stylesheet">
+        <link href="<?= base_url(); ?>assets/css/jquery.gritter.css" rel="stylesheet">
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
         <script src="js/html5shiv.js"></script>

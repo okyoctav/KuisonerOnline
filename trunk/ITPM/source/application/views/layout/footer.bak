@@ -1,0 +1,152 @@
+		                                    </div><!-- contentpanel -->
+		                </div>
+            </div><!-- mainwrapper -->
+        </section>
+
+
+		<script src="<?= base_url(); ?>assets/js/jquery.min.js"></script>
+        <script src="<?= base_url(); ?>assets/js/jquery-ui-1.10.3.min.js"></script>
+        <script src="<?= base_url(); ?>assets/js/bootstrap.min.js"></script>
+        <script src="<?= base_url(); ?>assets/js/modernizr.min.js"></script>
+        <script src="<?= base_url(); ?>assets/js/pace.min.js"></script>
+        <script src="<?= base_url(); ?>assets/js/retina.min.js"></script>
+        <script src="<?= base_url(); ?>assets/js/jquery.cookies.js"></script>
+        <script src="<?= base_url(); ?>assets/js/morris.min.js"></script>
+        <script src="<?= base_url(); ?>assets/js/raphael-2.1.0.min.js"></script>
+        <script src="<?= base_url(); ?>assets/js/jquery.gritter.min.js"></script>
+        <script src="<?= base_url(); ?>assets/js/custom.js"></script>
+        <script type="text/javascript">
+            function selectRow(row){
+
+              var firstInput = row.getElementsByTagName('input')[0];
+              firstInput.checked = !firstInput.checked;
+              
+            }
+
+            function removeBox (box) {
+                $(box).fadeOut('slow', function() {
+                    $(box).remove();
+                });
+            }
+            <?php if ($this->uri->segment(1) == 'dosen') { ?>
+            var audioElement = document.createElement('audio');
+            var temp;
+            var data;
+            function audio () {
+              audioElement.setAttribute('src', '../assets/sounds/notif.mp3');
+              audioElement.play();
+            }
+            function cekData () {
+                $.ajax({
+                    url: "<?= base_url('ajax');?>/hasil_kuesioner",
+                    data: {id_dosen : "<?= $this->session->userdata('login')[0]['real_id']; ?>",
+                           level: "dosen"},
+                    type: "POST",
+                    dataType: "html",
+                    success: function (data) {
+
+                        if (temp != null) {
+                            data = JSON.parse(data);
+                            for(key in data){
+                                if (temp.hasOwnProperty(key)) {
+                                    if (data[key]['responden'] != temp[key]['responden']) {
+                                        jQuery.gritter.add({
+                                            title:'Hasil Kuesioner',
+                                            text:'<span style="color:white;">Data Baru Untuk Kuesioner '+data[key]['nama']+' Telah Masuk</span> <a href="<?= base_url() ?>dosen/hasil_kuesioner/'+data[key]['id_matkul']+'/'+data[key]['id_settings']+'">Klik</a>',
+                                            class_name: 'growl-info',
+                                            sticky: false,
+                                            time: ''
+                                        });
+                                        audio();
+                                    }
+                                }else{
+                                    jQuery.gritter.add({
+                                        title:'Hasil Kuesioner',
+                                        text:'<span style="color:white;">Data Baru Untuk Kuesioner '+data[key]['nama']+' Telah Masuk</span> <a href="<?= base_url() ?>dosen/hasil_kuesioner/'+data[key]['id_matkul']+'/'+data[key]['id_settings']+'">Klik</a>',
+                                        class_name: 'growl-info',
+                                        sticky: false,
+                                        time: ''
+                                    });
+                                    audio();
+                                };
+                            }
+                            if (temp !== data ) {
+                                temp = data;
+                            };
+                        }else{
+                            temp = JSON.parse(data);
+                        };
+                        setTimeout(cekData, 1000);
+
+                    }
+                });
+            }
+            cekData();
+            <?php } ?>
+            function cekDate() {
+                var startDate = new Date($('#tanggal_mulai').val()).getTime();
+                var endDate = new Date($('#tanggal_selesai').val()).getTime();
+                if (startDate >= endDate){
+                    alert('Tanggal selesai tidak boleh kurang atau sama dengan tanggal mulai !!!');
+                    $('#tanggal_selesai').val('');
+                }
+            }
+            <?php
+            if (($this->uri->segment(2) == 'hasil_kuesioner' && $this->uri->segment(1) == 'dosen' && $this->uri->segment(3) != '') || ($this->uri->segment(1) == 'prodi' && $this->uri->segment(5) != '') || ($this->uri->segment(1) == 'p2mi' && $this->uri->segment(5) != '')) { foreach ($butir as $key2 => $val2):?>
+                var m4 = new Morris.Bar({
+                    // ID of the element in which to draw the chart.
+                    element: '<?= strtolower(str_replace(' ', '-',$butir[$key2]["butir"])) ?>',
+                    // Chart data records -- each entry in this array corresponds to a point on
+                    // the chart.
+                    data: [
+                    <?php for ($no=5; $no >= 1 ; $no--) { ?>
+                        { y: <?php switch ($no) {
+            case 1:
+                //echo "'sangat tidak baik/sangat rendah/tidak pernah/tidak lengkap'";
+                echo "'1 Poin'";
+            break;
+            case 2:
+                //echo "'tidak baik/rendah/jarang/kurang lengkap'";
+                echo "'2 Poin'";
+            break;
+            case 3:
+                //echo "'biasa/cukup/kadang-kadang/cukup lengkap'";
+                echo "'3 Poin'";
+            break;
+            case 4:
+                //echo "'baik/tinggi/sering/lengkap'";
+                echo "'4 Poin'";
+            break;
+            case 5:
+                //echo "'sangat baik/sangat tinggi/selalu/sangat lengkap'";
+                echo "'5 Poin'";
+            break;
+        }?>, a: <?php echo round($butir[$key2]['presentase'.$no],2)?>},
+                    <?php } ?>
+                    ],
+                    xkey: 'y',
+                    ykeys: ['a'],
+                    ymax:[100],
+                    labels: ['Presentase'],
+                    barColors: ['#1CAF9A'],
+                    lineWidth: '1px',
+                    fillOpacity: 0.8,
+                    smooth: false,
+                    hideHover: true,
+                });
+                <?php endforeach; } if (($this->uri->segment(2) == 'hasil_kuesioner' && $this->uri->segment(3) != '' && $this->uri->segment(1) == 'prodi' && $this->uri->segment(4) == ''  && $this->uri->segment(5) == '' ) || ($this->uri->segment(2) == 'hasil_kuesioner' && $this->uri->segment(3) != '' && $this->uri->segment(1) == 'p2mi' && $this->uri->segment(4) == ''  && $this->uri->segment(5) == '' )) { ?>
+                    Morris.Donut({
+                  element: 'donat',
+                  data: [
+                    <?php $total_data_likert = 0; foreach ($kuesioners as $total_likert) {
+                        $total_data_likert += $total_likert['total_likert_per_kompetensi'];
+                    } foreach ($kuesioners as $kuesioner) {?>
+                        {label: "<?= $kuesioner['nama_kompetensi'] ?>", value: <?= $kuesioner['total_likert_per_kompetensi'] ?>},
+                    <?php } ?>
+                  ],
+                  formatter: function (value, data) { return (((value/<?= $total_data_likert ?>)*100).toFixed(2)) + '%'; }
+                });
+               <?php }?>
+        </script>
+    </body>
+</html>
