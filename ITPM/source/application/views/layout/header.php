@@ -3,7 +3,7 @@ $sessLogin = $this->session->userdata('login')[0];
 ?><header>
             <div class="headerwrapper">
                 <div class="header-left">
-                    <a href="index-2.html" class="logo">
+                    <a href="#" class="logo">
                         <img src="<?= base_url(); ?>assets/images/logo.png" alt="" /> 
                     </a>
                     <div class="pull-right">
@@ -16,6 +16,18 @@ $sessLogin = $this->session->userdata('login')[0];
                 <div class="header-right">
                     
                     <div class="pull-right">
+                        
+                        <div class="btn-group btn-group-list btn-group-notification" id="toggleNotip">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                              <i class="fa fa-bell-o"></i>
+                              <span class="badge" id="totalNotip">0</span>
+                            </button>
+                            <div class="dropdown-menu pull-right">
+                                <h5>Notification</h5>
+                                <ul class="media-list dropdown-list" id="notip" style="height:300px; overflow:auto;">
+                                </ul>
+                            </div><!-- dropdown-menu -->
+                        </div><!-- btn-group -->
                         
                         <div class="btn-group btn-group-option">
                             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
@@ -37,7 +49,7 @@ $sessLogin = $this->session->userdata('login')[0];
             <div class="mainwrapper">
                 <div class="leftpanel">
                     <div class="media profile-left">
-                        <a class="pull-left profile-thumb" href="profile.html">
+                        <a class="pull-left profile-thumb" href="#">
                             <img class="img-circle" src="<?= base_url(); ?>assets/foto/<?= $sessLogin['foto']; ?>" alt="">
                         </a>
                         <div class="media-body">
@@ -49,6 +61,15 @@ $sessLogin = $this->session->userdata('login')[0];
                                     break;
                                     case '1':
                                         echo "Puskomsi";
+                                    break;
+                                    case '2':
+                                        echo "Mahasiswa";
+                                    break;
+                                    case '3':
+                                        echo "Dosen";
+                                    break;
+                                    case '4':
+                                        echo "Program Study";
                                     break;
                                 } ?>
                             </small>

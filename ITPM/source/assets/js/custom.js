@@ -127,21 +127,21 @@ jQuery(document).ready(function() {
    }
 
 
-   jQuery('#btn_crop').prop('disabled',true);
-   jQuery('.buttonDownload').click(function() {
+    $('.add-box').click(function(){
+        var n = $('.textbox').length + 1;
+        if( 5 < n ) {
+            alert('Stop it!');
+            return false;
+        }
+        var box_html = $('<div class="form-group textbox" id="box'+n+'"><label class="col-sm-2 control-label">Butir Kuesioner</label><div class="col-sm-8"><input placeholder="Butir Kuesioner.." required class="form-control" name="butir[]" type="text"></div><a href="javascript:removeBox(box'+n+')" class="remove-box">Remove</a></div>');
+        box_html.hide();
+        $('.textbox:last').after(box_html);
+        box_html.fadeIn('slow');
+        return false;
+    });
 
-     jQuery('.buttonDownload').fadeOut('fast');
-     jQuery('.infoProgress').fadeIn('slow');
-     jQuery('.progressBar').fadeIn('slow');
-     
-   });
-
-
-
-   jQuery('.inputTanggal').change(function() {
-       var cek = jQuery('.inputTanggal').val();
-       if (cek == 'tanggal_expire') { jQuery('.inputCariProduk').hide('slow'); jQuery('.tanggal_expire').show('slow'); }
-       else { jQuery('.inputCariProduk').show('slow'); jQuery('.tanggal_expire').hide('slow'); }
+   $('#toggleNotip').click(function() {
+      $('#totalNotip').text('0');
    });
 
 });
